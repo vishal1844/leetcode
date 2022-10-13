@@ -23,9 +23,9 @@ public:
        for(i=0;i<nums.size();i++){
            if(nums[i]==k){
                v.push_back(i);
-               continue;
+               //continue;
            }
-           if(nums[i]==t)
+           else if(nums[i]==t)
                v.push_back(i);
        }
         return v;
