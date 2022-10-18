@@ -22,7 +22,7 @@ public:
 	    //int search(vector <vector <int>> &mat,int i, int size, int X)
 	    int i,j,k,l,m;
 	    i=0,j=M-1;
-	    while(i<N){
+	    while(i<N&&j<M){
 	        if(mat[i][j]==X){
 	            return 1;
 	        }
