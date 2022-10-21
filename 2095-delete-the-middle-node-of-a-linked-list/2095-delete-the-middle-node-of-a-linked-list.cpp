@@ -14,7 +14,7 @@ public:
         if(head->next==NULL){
             return NULL;
         }
-        ListNode*temp=head;
+       // ListNode*temp=head;
        ListNode*slow=head;
         ListNode*fast=head;
         while(fast->next->next!=NULL&&fast->next->next->next!=NULL){
@@ -24,6 +24,6 @@ public:
          ListNode*t=slow->next;
         slow->next=slow->next->next;
         delete(t);
-        return temp;
+        return head;
     }
 };
