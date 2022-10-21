@@ -1,36 +1,30 @@
 class Solution {
 public:
     int numUniqueEmails(vector<string>& emails) {
-        int i,j,k,l,m;
-        //int n=emails.size();
-        string s,t;
-        //char r;
-        unordered_map<string,int>st;
-        for(auto itr:emails){
-            //t=emails[i];
+        int i,j,k,l,m,t;
+        string s;
+        int n=emails.size();
+        unordered_set<string>st;
+        for(i=0;i<n;i++){
             s="";
-            i=0;
-            while(itr[i]!='@'&&itr[i]!='+'){
-                if(itr[i]=='.'){
-                    i++;
-                    //continue;
+            string r=emails[i];
+            int j=0;
+            while(r[j]!='@'&&r[j]!='+'){
+                if(r[j]=='.'){
+                    j++;
+                    continue;
                 }
-                else{
-                    s+=itr[i];
-                    i++;
-                }
+                s+=r[j];
+                j++;
             }
-            //j++;
-           while(itr[i]!='@'){
-               i++;
-               //continue;
-           }
-            //j++;
-            while(i<itr.size()){
-                s+=itr[i];
-                i++;
+            while(r[j]!='@'){
+                j++;
             }
-            st[s]++;
+            while(j<r.size()){
+                s+=r[j];
+                j++;
+            }
+            st.insert(s);
         }
         return st.size();
     }
