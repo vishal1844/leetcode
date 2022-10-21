@@ -19,7 +19,7 @@ public:
             fast=fast->next;
             i++;
         }
-        if(fast==NULL) return head=head->next;
+        if(fast==NULL) return head->next;
         else{
             while(fast->next!=NULL){
                 fast=fast->next;
