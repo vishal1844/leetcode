@@ -1,22 +1,23 @@
 class Solution {
 public:
     string capitalizeTitle(string title) {
-        int i,j,k,l,m,t=0;
-        string s;
-        for(i=0;i<title.size();i++){
-            title[i]=tolower(title[i]);
-        }
-        for(i=0;i<title.size();i++){
-            t=0;
-            l=i;
-                while(i<title.size()&&title[i]!=' '){
-                    t++;
-                    i++;
+        int i,j,k,l,m,t;
+        for(j=0,i=0;i<=title.size();i++){
+            if(i==title.size()||title[i]==' '){
+                if(i-j>2){
+                    //cout<<i-j<<" ";
+                    title[j]=toupper(title[j]);
+                    //cout<<title[j]<<" "<<i;
+                    j=i+1;
                 }
-            if(t>2){
-                title[l]=toupper(title[l]);
+                else{
+                    j=i+1;
+                }
+            }
+            else{
+                title[i]=tolower(title[i]);
             }
         }
-        return title;
+        return title; 
     }
 };
