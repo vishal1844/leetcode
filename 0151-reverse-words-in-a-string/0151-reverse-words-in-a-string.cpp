@@ -1,18 +1,49 @@
 class Solution {
 public:
     string reverseWords(string s) {
-        string st,s1;
-        vector<string>st1;
-        int i,j,k,l,t;
-        stringstream ss(s);
-        while(ss>>st){
-            st1.push_back(st);
+        string st;
+        int i=0,l=0,j=0,k,m,t;
+        reverse(s.begin(),s.end());
+        while(i<s.size()){
+            while(i<s.size()&&s[i]==' ')i++;
+            while(i<s.size()&&s[i]!=' '){
+                st+=s[i++];
+                j++;
+            }
+            if(l<j){
+                reverse(st.begin()+l,st.begin()+j);
+                if(j==s.size()) break;
+                st+=' ';
+                j++;
+                l=j;
+            }
         }
-        reverse(st1.begin(),st1.end());
-        for(i=0;i<st1.size();i++){
-            if(i!=0) s1+=" ";
-            s1+=st1[i];
+        if(j>0&&st[j-1]==' '){
+            st.pop_back();
         }
-        return s1;
+        //cout<<st.size();
+        return st;
     }
 };
+// class Solution {
+// public:
+//     string reverseWords(string s) {
+//         reverse(s.begin(), s.end());
+//         int l = 0, r = 0, i = 0, n = s.size();
+//         while (i < n) {
+//             while (i < n && s[i] != ' ')
+//                 s[r++] = s[i++];
+
+//             if (l < r) { // if we can find a non-empty word then
+//                 reverse(s.begin() + l, s.begin() + r); // reverse current word
+//                 if (r == n) break;
+//                 s[r++] = ' '; // set empty space
+//                 l = r;
+//             }
+//             ++i; // now i == n or s[i] == ' ', so we skip that character!
+//         }
+//         if (r > 0 && s[r-1] == ' ') --r; // skip last empty character if have
+//         s.resize(r);
+//         return s;
+//     }
+// };
