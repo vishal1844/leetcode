@@ -14,13 +14,17 @@ public:
         }
         for(auto itr:mp){
             if(st.find(itr.first)!=st.end()){
-                if(itr.second>=2){
-                    st.erase(itr.first);
-                }
-                else{
+                // if(itr.second>=2){
+                //     st.erase(itr.first);
+                // }
+                // else{
+                //     vec.push_back(itr.first);
+                //     st.erase(itr.first);
+                // }
+                if(itr.second==1){
                     vec.push_back(itr.first);
-                    st.erase(itr.first);
                 }
+                st.erase(itr.first);
             }
             else if(itr.second==1){
                 vec.push_back(itr.first);
