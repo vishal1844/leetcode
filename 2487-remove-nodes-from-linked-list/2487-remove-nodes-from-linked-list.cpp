@@ -11,14 +11,30 @@
 class Solution {
 public:
     ListNode* removeNodes(ListNode* head) {
-        if(head==NULL||head->next==NULL){
-            return head;
+        ListNode*temp=head;
+        stack<int>st;
+        while(temp!=NULL){
+            while(!st.empty()&&st.top()<temp->val){
+                st.pop();
+            }
+            st.push(temp->val);
+            temp=temp->next;
         }
-        ListNode*tail=removeNodes(head->next);
-        if(tail->val>head->val){
-            return tail;
+        vector<int>ds;
+        while(!st.empty()){
+            ds.push_back(st.top());
+            st.pop();
         }
-        head->next=tail;
+        reverse(ds.begin(),ds.end());
+        temp=head;
+        ListNode*prev;
+        for(auto itr:ds){
+           // cout<<itr<<" ";
+            temp->val=itr;
+            prev=temp;
+            temp=temp->next;
+        }
+        prev->next=NULL;
         return head;
     }
 };
