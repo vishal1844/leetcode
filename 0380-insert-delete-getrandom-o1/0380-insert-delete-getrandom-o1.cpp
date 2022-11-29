@@ -1,32 +1,40 @@
 class RandomizedSet {
 public:
-    unordered_set<int>st;
+    //unordered_set<int>st;
+    unordered_map<int,int>mp;
     vector<int>v;
     RandomizedSet() {
         
     }
     
     bool insert(int val) {
-        if(st.count(val)){
+        //if(st.count(val)){
+        if(mp.find(val)!=mp.end()){
             return false;
         }
         else{
-            st.insert(val);
+            //st.insert(val);
             v.push_back(val);
+            mp[val]=v.size()-1;
             return true;
         }
     }
     
     bool remove(int val) {
-        if(st.count(val)){
-            st.erase(val);
-            for(int i=0;i<v.size();i++){
-                if(v[i]==val){
-                    v[i]=v.back();
-                    v.pop_back();
-                    break;
-                }
-            }
+        //if(st.count(val)){
+        if(mp.find(val)!=mp.end()){
+            //st.erase(val);
+            // for(int i=0;i<v.size();i++){
+            //     if(v[i]==val){
+            //         v[i]=v.back();
+            //         v.pop_back();
+            //         break;
+            //     }
+            // }
+            v[mp[val]]=v.back();
+            mp[v[mp[val]]]=mp[val];
+            mp.erase(val);
+            v.pop_back();
             return true;
         }
         else{
