@@ -6,8 +6,8 @@ public:
             return false;
         }
         vector<int>v(26,0),vec(26,0);
-        set<int>st(word1.begin(),word1.end());
-        set<int>sts(word2.begin(),word2.end());
+        //set<int>st(word1.begin(),word1.end());
+        //set<int>sts(word2.begin(),word2.end());
         for(i=0;i<word1.size();i++){
             v[word1[i]-'a']++;
         }
@@ -16,7 +16,7 @@ public:
         }
         sort(v.begin(),v.end());
         sort(vec.begin(),vec.end());
-        if(st==sts){
+        if(set<int>(word1.begin(),word1.end())==set<int>(word2.begin(),word2.end())){
             if(v==vec)
                 return true;
             return false;
