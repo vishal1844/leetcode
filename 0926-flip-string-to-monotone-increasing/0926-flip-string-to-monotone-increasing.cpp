@@ -1,16 +1,15 @@
 class Solution {
 public:
     int minFlipsMonoIncr(string s) {
-        int count=0,t=0,j,k,l,i;
+        int t=0,k=0;
+        int i,j;
         for(i=0;i<s.size();i++){
-            if(s[i]=='0'){
-                count++;
-            }
-            else{
+            if(s[i]=='0')
                 t++;
-            }
-            count=min(count,t);
+            else
+                k++;
+            t=min(t,k);
         }
-        return count;
+        return t;
     }
 };
