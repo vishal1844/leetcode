@@ -3,8 +3,9 @@ public:
     int strStr(string haystack, string needle) {
         int i,j=0,k,l,m,t,s=0;
         int n=haystack.size();
-        if(n<needle.size())return -1;
-        for(i=0;i<=n-needle.size();i++){
+        //if(n<needle.size())return -1;
+        m=needle.size();
+        for(i=0;i<=n-m;i++){
             j=0;
             for(j=0;j<needle.size();j++){
                 if(needle[j]!=haystack[i+j]){
