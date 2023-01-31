@@ -6,18 +6,18 @@ public:
         }
        // return 0;
         //cout<<INT_MAX;
-        if(dividend>INT_MAX||dividend<INT_MIN){
-            cout<<"UJ";
-            return INT_MAX;
-        }
-        if(dividend<INT_MIN){
-            if(divisor==-1){
-                return INT_MAX;
-            }
-            else{
-                return dividend/divisor;
-            }
-        }
+        // if(dividend>INT_MAX||dividend<INT_MIN){
+        //     cout<<"UJ";
+        //     return INT_MAX;
+        // }
+        // if(dividend<INT_MIN){
+        //     if(divisor==-1){
+        //         return INT_MAX;
+        //     }
+        //     else{
+        //         return dividend/divisor;
+        //     }
+        // }
 //         if(dividend<0&&divisor<0){
 //             dividend=-1*dividend;
 //             divisor=-1*divisor;
