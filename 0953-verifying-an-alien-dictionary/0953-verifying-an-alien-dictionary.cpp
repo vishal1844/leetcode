@@ -17,6 +17,7 @@ public:
                 return false;
             }
             else if(order.find(s[j])>order.find(st[j])){
+               // cout<<order.find(s[j])<<" "<<s[j];
                 return false;
             }
         }
