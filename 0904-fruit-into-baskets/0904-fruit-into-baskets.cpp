@@ -12,20 +12,17 @@ public:
         }
         m=max(m,2);
         for(i=2;i<fruits.size();i++){
-            //cout<<t<<" ";
             t++;
             mp[fruits[i]]++;
             if(mp.size()<=2){
                 m=max(m,t);
-                //cout<<t<<" ";
             }
             else{
-                while(mp.size()!=2){
+                while(mp.size()>2){
                     mp[fruits[j]]--;
                     t--;
                     if(mp[fruits[j]]==0){
                         mp.erase(fruits[j]);
-                       // cout<<fruits[j]<<" ";
                     }
                     j++;
                 }
