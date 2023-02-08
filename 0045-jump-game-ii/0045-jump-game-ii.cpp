@@ -9,9 +9,9 @@ public:
             if(l==i){
                 l=m;
                 t++;
-                if(l>=k){
-                    return t; 
-                }
+                // if(l>=k){
+                //     return t; 
+                // }
             }
         }
         return t;
