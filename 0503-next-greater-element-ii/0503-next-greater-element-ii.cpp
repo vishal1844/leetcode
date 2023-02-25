@@ -6,7 +6,8 @@ public:
         for(i=0;i<nums.size();i++){
             j=(i+1)%nums.size();
             while((nums[i]>=nums[j%nums.size()])&&(i!=(j%nums.size()))){
-                j=(j+1)%nums.size();
+               j=(j+1)%nums.size();
+                //j+=1;
             }
             if(i==(j%nums.size())){
                 v.push_back(-1);
