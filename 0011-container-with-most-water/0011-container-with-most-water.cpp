@@ -11,6 +11,10 @@ public:
             if(height[i]<height[j]){
                 i++;
             }
+            else if(height[i]==height[j]){
+                i++;
+                j--;
+            }
             else{
                 j--;
             }
