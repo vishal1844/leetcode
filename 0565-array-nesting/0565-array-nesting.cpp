@@ -5,12 +5,12 @@ public:
         int n=nums.size();
         vector<int>v(n);
         for(i=0;i<n;i++){
-            j=i;
+            //j=i;
             t=0;
-            while(!v[j]){
+            while(!v[i]){
                 t++;
-                v[j]=1;
-                j=nums[j];
+                v[i]=1;
+                i=nums[i];
             }
             maxi=max(maxi,t);
         }
