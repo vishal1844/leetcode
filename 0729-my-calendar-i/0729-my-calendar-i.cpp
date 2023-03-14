@@ -1,17 +1,17 @@
 class MyCalendar {
-    vector<pair<int,int>>v;
+    map<int,int>mp;
 public:
     MyCalendar() {
         
     }
     
     bool book(int start, int end) {
-        for(int i=0;i<v.size();i++){
-            if(v[i].first<end&&start<v[i].second)
-                return false;
-        }
-        v.push_back({start,end});
-        return true;
+        int i,j,k,l,m,t=0;
+        auto itr=mp.upper_bound(start);
+        if(itr==mp.end()||end<=itr->second){
+        mp[end]=start;
+        return true;}
+        return false;
     }
 };
 
