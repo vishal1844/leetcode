@@ -17,7 +17,7 @@ class Solution {
         s+=(root->val+'0');
         if(root->left==NULL&&root->right==NULL){
             int i=stoi(s);
-            s="";
+            //s="";
             //sum+=i;
             return i;
         }
