@@ -1,11 +1,16 @@
 class Solution {
     public:
     static bool cmp(vector<int>&a,vector<int>&b){
+        if(a[0]==b[0]){
             if(a[1]<b[1]){
                 return true;
             }
-        if(a[1]==b[1]){
-            return a[0]<b[0];
+            else{
+                return false;
+            }
+        }
+        if(a[1]<b[1]){
+            return true;
         }
         return false;
     }
