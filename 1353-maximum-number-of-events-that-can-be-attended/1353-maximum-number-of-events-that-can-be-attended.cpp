@@ -1,40 +1,22 @@
 class Solution {
-    public:
-    static bool cmp(vector<int>&a,vector<int>&b){
-        if(a[0]==b[0]){
-            if(a[1]<b[1]){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-        if(a[1]<b[1]){
-            return true;
-        }
-        return false;
-    }
 public:
     int maxEvents(vector<vector<int>>& events) {
-        int i,j,k,l,m,t=0;
-        sort(events.begin(),events.end(),cmp);
-        set<int>st;
-        for(i=1;i<=100000;i++){
-            st.insert(i);
-        }
-        for(i=0;i<events.size();i++){
-            k=events[i][0];
-            l=events[i][1];
-            auto itr=st.lower_bound(k);
-            if(itr==st.end()||(*itr)>l){
-                continue;
+        int i=0,j,k,l,m,t=0,d=0;
+        sort(events.begin(),events.end());
+        priority_queue<int,vector<int>,greater<int>>pq;
+        for(d=1;d<=100000;d++){
+            while(!pq.empty()&&pq.top()<d){
+                pq.pop();
             }
-            else{
+            while(i<events.size()&&events[i][0]==d){
+                pq.push(events[i][1]);
+                i++;
+            }
+            if(pq.size()){
+                pq.pop();
                 t++;
-                st.erase(*itr);
             }
         }
         return t;
-        
     }
 };
