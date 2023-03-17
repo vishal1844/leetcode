@@ -10,24 +10,23 @@
  * };
  */
 class Solution {
-    TreeNode*buildtreepostin(vector<int>&inorder,int is,int ie,vector<int>&postorder,int ps,int pe,unordered_map<int,int>&mp){
-        if(ps>pe||is>ie)return NULL;
+    TreeNode* buildin(vector<int>&inorder,int is,int ie,vector<int>&postorder,int ps,int pe,unordered_map<int,int>&mp){
+        if(is>ie||ps>pe)return NULL;
         TreeNode*root=new TreeNode(postorder[pe]);
-        int inroot=mp[postorder[pe]];
-        int numsleft=inroot-is;
-        root->left=buildtreepostin(inorder,is,inroot-1,postorder,ps,ps+numsleft-1,mp);
-        root->right=buildtreepostin(inorder,inroot+1,ie,postorder,ps+numsleft,pe-1,mp);
+        int t=mp[postorder[pe]];
+        int num=t-is;
+        root->left=buildin(inorder,is,t-1,postorder,ps,ps+num-1,mp);
+        root->right=buildin(inorder,t+1,ie,postorder,ps+num,pe-1,mp);
         return root;
     }
 public:
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
-        int i,j,k,l,m,t=0;
         unordered_map<int,int>mp;
-        if(inorder.size()!=postorder.size())return NULL;
+        int i,j,k,l,m,t=0;
         for(i=0;i<inorder.size();i++){
             mp[inorder[i]]=i;
         }
-        return buildtreepostin(inorder,0,inorder.size()-1,postorder,0,postorder.size()-1,mp);
+        return buildin(inorder,0,inorder.size()-1,postorder,0,postorder.size()-1,mp);
         
     }
 };
