@@ -8,7 +8,7 @@ public:
             return v;
         }
         k=finalSum;
-        for(i=2;i<=finalSum;i+=2){
+        for(i=2;i<=1ll*finalSum;i+=2){
             if(i>k){
                 break;
             }
