@@ -21,8 +21,8 @@ public:
         }
         sort(v.begin(),v.end());
         for(int i=0;i<v.size();i++){
-          ListNode*r=new ListNode(v[i]);
-            t->next=r;
+          //ListNode*r=new ListNode(v[i]);
+            t->next=new ListNode(v[i]);
             t=t->next;
         }
         return tail->next;
