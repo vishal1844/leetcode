@@ -4,7 +4,7 @@ public:
         int i,j,k,l,m,t=0;
         vector<int>v;
         for(i=1;i<arr.size();i++){
-            arr[i]=arr[i]^arr[i-1];
+            arr[i]=arr[i]^arr[i-1];                 //prefix XOR
         }
         for(auto itr:queries){
             if(itr[0]==0){
