@@ -7,15 +7,10 @@ public:
         sort(nums.begin(),nums.end());
         for(i=0;i<nums.size();i++){
             if(st.count(nums[i]-k)){
-                t++;
+                //t++;
                 s.insert({nums[i]-k,nums[i]});
-                cout<<t<<" ";
-                st.erase(nums[i]-k);
+                //st.erase(nums[i]-k);
             }
-            // else if(st.count(k-nums[i])){
-            //     t++;
-            //     st.erase(k-nums[i]);
-            // }
             st.insert(nums[i]);
         }
         return s.size();
