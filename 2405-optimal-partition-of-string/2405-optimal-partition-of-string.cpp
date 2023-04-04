@@ -1,22 +1,16 @@
 class Solution {
 public:
     int partitionString(string s) {
-        int i,j,k,m,l=0,t=0;
+        set<char>st;
+        int i,j,k,l,m,t=0;
         for(i=0;i<s.size();i++){
-            set<char>st;
-            l=0;
-            while(i<s.size()&&!st.count(s[i])){
-                st.insert(s[i]);
-                i++;
-                l=1;
-                //st.insert(s[i]);
+            if(st.count(s[i])){
+                t++;
+                st.clear();
             }
-            t++;
-            if(l==1)i--;
-            st.clear();
+            st.insert(s[i]);
         }
+        t++;
         return t;
-        
-        
     }
 };
