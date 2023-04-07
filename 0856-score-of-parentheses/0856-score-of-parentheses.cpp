@@ -1,21 +1,19 @@
 class Solution {
 public:
     int scoreOfParentheses(string s) {
-        int i,j,k,l,m,t=0;
-        stack<int>st;
-        st.push(0);
+        int i,j=0,t=0;
         for(i=0;i<s.size();i++){
             if(s[i]=='('){
-                st.push(0);
+                j++;
             }
             else{
-                k=st.top();
-                st.pop();
-                l=st.top();
-                st.pop();
-                st.push(l+max(2*k,1));
+                j--;
+                if(s[i-1]=='('){
+                t+=(1<<j);
+                }
             }
         }
-        return st.top();
+        return t;
+        
     }
 };
