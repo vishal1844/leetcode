@@ -1,19 +1,22 @@
 class Solution {
 public:
-    int maxValueOfCoins(vector<vector<int>>& A, int K) {
-        int n = A.size();
-        vector<vector<int>> memo(n + 1, vector<int>(K + 1, 0));
-        function<int(int, int)> dp = [&](int i, int k) {
-            if (memo[i][k] > 0) return memo[i][k];
-            if (i == n || k == 0) return 0;
-            int res = dp(i + 1, k), cur = 0;
-            for (int j = 0; j < A[i].size() && j < k; ++j) {
-                cur += A[i][j];
-                res = max(res, dp(i + 1, k - j - 1) + cur);
-            }
-            memo[i][k] = res;
-            return res;
-        };
-        return dp(0, K);
+    int dp[2001][2001];
+    int fun(vector<vector<int>>&v,int ind,int t,int m){
+        if(ind<0||t<=0)return 0;
+        if(dp[ind][t]!=-1)return dp[ind][t];
+        int ans=0;
+        ans=fun(v,ind-1,t,m);
+        int sum=0;
+        for(int i=0;i<(t>=v[ind].size()?v[ind].size():t);i++){
+          //  cout<<ind<<' '<<i<<' ';
+            sum+=v[ind][i];
+            ans=max(ans,fun(v,ind-1,t-i-1,m)+sum);
+            //dp[ind][i]=ans;
+        }
+        return dp[ind][t]=ans;
+    }
+    int maxValueOfCoins(vector<vector<int>>& v, int k) {
+        memset(dp,-1,sizeof(dp));
+        return fun(v,v.size()-1,k,v.size());
     }
 };
