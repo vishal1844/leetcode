@@ -19,6 +19,10 @@ public:
                 flowerbed[i]=1;
                 t++;
             }
+            else if(i==flowerbed.size()-2&&flowerbed[i]==0&&flowerbed[i+1]==0){
+                flowerbed[i+1]=1;
+                t++;
+            }
             else if(flowerbed[i-1]==0&&flowerbed[i]==0&&flowerbed[i+1]==0){
                 flowerbed[i]=1;
                 t++;
@@ -27,11 +31,11 @@ public:
                 return true;
             }
         }
-        if(flowerbed.size()%2==0){
-            if(flowerbed[i-2]==0&&flowerbed[i-1]==0){
-                t++;
-            }
-        }
+        // if(flowerbed.size()%2==0){
+        //     if(flowerbed[i-2]==0&&flowerbed[i-1]==0){
+        //         t++;
+        //     }
+        // }
         if(t==n){
             return true;
         }
