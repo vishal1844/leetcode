@@ -1,53 +1,34 @@
 class Solution {
-bool issafe(int row,int col,vector<string>v,int n){
-        int duprow=row;
-        int dupcol=col;
-        while(row>=0&&col>=0){
-            if(v[row][col]=='Q'){
-                return false;
-            }
-            row--;
-            col--;
-        }
-        row=duprow;
-        col=dupcol;
-        while(col>=0){
-            if(v[row][col]=='Q')return false;
-            col--;
-        }
-        row=duprow;
-        col=dupcol;
-        while(row<n&col>=0){
-            if(v[row][col]=='Q')return false;
-            row++;
-            col--;
-        }
-        return true;
-    }
-public:
-    void solve(int col,vector<vector<string>>&ans,vector<string>&v,int n){
+    int t=0;
+    void solve(int col,vector<string>&v,int n,vector<int>&leftrow,vector<int>&lowerdiagonal,vector<int>&upperdiagonal){
         if(col==n){
-            ans.push_back(v);
+            t++;
             return;
         }
         for(int row=0;row<n;row++){
-            if(issafe(row,col,v,n)){
+            if(leftrow[row]==0&&lowerdiagonal[row+col]==0&&upperdiagonal[n-1+col-row]==0){
+                leftrow[row]=1;
+                lowerdiagonal[row+col]=1;
+                upperdiagonal[n-1+col-row]=1;
                 v[row][col]='Q';
-                solve(col+1,ans,v,n);
+                solve(col+1,v,n,leftrow,lowerdiagonal,upperdiagonal);
+                leftrow[row]=0;
+                lowerdiagonal[row+col]=0;
+                upperdiagonal[n-1+col-row]=0;
                 v[row][col]='.';
             }
         }
     }
 public:
     int totalNQueens(int n) {
-        vector<vector<string>>ans;
         vector<string>v(n);
         string s(n,'.');
         for(int i=0;i<n;i++){
             v[i]=s;
         }
-        solve(0,ans,v,n);
-        return ans.size();
+        vector<int>leftrow(n,0),lowerdiagonal(2*n-1,0),upperdiagonal(2*n-1,0);
+        solve(0,v,n,leftrow,lowerdiagonal,upperdiagonal);
+        return t;
         
     }
 };
