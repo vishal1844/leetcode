@@ -14,7 +14,6 @@ public:
         map<int,int>mp;
         for(i=0;i<nums.size();i++){
             l=solve(nums[i]);
-            cout<<l<<" ";
             if(mp.find(l)!=mp.end()){
                 t=max(t,mp[l]+nums[i]);
                 if(mp[l]<nums[i])mp[l]=nums[i];
