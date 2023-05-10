@@ -1,7 +1,7 @@
 class Solution {
     set<vector<int>>st;
     void solve(int ind,int n,vector<int>&nums,vector<int>v,vector<int>&visit){
-        if(v.size()==n){
+        if(ind==n){
             st.insert(v);
         }
         for(int i=0;i<n;i++){
