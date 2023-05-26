@@ -17,13 +17,16 @@ public:
             return 0;
         }
         q.push(root);
+        int res=0;
         while(!q.empty()){
             int size=q.size();
-            vector<int>vec;
+            // vector<int>vec;
+            res=0;
             for(int i=0;i<size;i++){
                 auto itr=q.front();
                 q.pop();
-                vec.push_back(itr->val);
+                //vec.push_back(itr->val);
+                res+=itr->val;
                 if(itr->left!=NULL){
                     q.push(itr->left);
                 }
@@ -31,14 +34,14 @@ public:
                     q.push(itr->right);
                 }
             }
-            if(q.empty()){
-                int t=0;
-                for(auto itr:vec){
-                    t+=itr;
-                }
-                return t;
-            }
+            // if(q.empty()){
+            //     int t=0;
+            //     for(auto itr:vec){
+            //         t+=itr;
+            //     }
+            //     return t;
+            // }
         }
-        return 0;
+        return res;
     }
 };
