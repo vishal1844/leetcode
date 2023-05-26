@@ -12,8 +12,6 @@
 class Solution {
 public:
     int deepestLeavesSum(TreeNode* root) {
-        vector<vector<int>>v;
-        vector<int>vec;
         queue<TreeNode*>q;
         if(root==NULL){
             return 0;
