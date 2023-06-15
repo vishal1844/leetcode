@@ -15,7 +15,7 @@ public:
         if(root==NULL)return 0;
         vector<int>v;
         queue<TreeNode*>q;
-        int j,k;
+        int j=0,k=0,t=INT_MIN,l;
         q.push(root);
        // v.push_back(root->val);
         while(!q.empty()){
@@ -32,21 +32,15 @@ public:
                     q.push(itr->right);
                 }
             }
-            //cout<<k<<" ";
-            v.push_back(k);
-        }
-        int t=INT_MIN;
-        k=0;
-        // for(auto itr:v){
-        //     cout<<itr<<" ";
-        // }
-        for(int i=0;i<v.size();i++){
-            if(t<v[i]){
-                t=v[i];
-                k=i;
-                //cout<<k<<" "<<t<<" ";
+            if(t<k){
+                t=k;
+                l=j;
             }
+            j++;
+            //cout<<k<<" ";
+            //v.push_back(k);
         }
-        return k+1;
+        
+        return l+1;
     }
 };
