@@ -9,7 +9,6 @@ public:
         while(l<h){
             int mid=(l+h)/2;
             if(nums[mid+1]<nums[mid]){
-                //ans=mid;
                 h=mid;
             }
             else{
