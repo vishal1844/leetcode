@@ -16,7 +16,7 @@ public:
         }
         t=0;
         priority_queue<ll>pq;
-        for(i=0;i<=1e5;i++){
+        for(i=0;i<n;i++){
             t+=v[i];
             pq.push(t);
         }
