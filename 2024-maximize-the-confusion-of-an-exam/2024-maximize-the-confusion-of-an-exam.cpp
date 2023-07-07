@@ -2,17 +2,6 @@ class Solution {
 public:
     int maxConsecutiveAnswers(string answer, int k) {
         int i,j=0,l,m=0,t=0;
-        for(i=0;i<answer.size();i++){
-            if(answer[i]=='T')t++;
-            else{
-                m++;
-            }
-        }
-        m=min(m,t);
-        if(m<=k){
-            return answer.size();
-        }
-        t=0;
         int count=0;
         for(i=0;i<answer.size();i++){
             if(answer[i]=='F'){
