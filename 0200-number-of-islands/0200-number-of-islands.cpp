@@ -2,7 +2,7 @@ class Solution {
     int a[4]={0,-1,+1,0};
     int b[4]={-1,0,0,+1};
     void dfs(int i,int j,vector<vector<int>>&visit,vector<vector<char>>&grid){
-        if(i<0||j<0||i>=grid.size()||j>=grid[0].size())return;
+        //if(i<0||j<0||i>=grid.size()||j>=grid[0].size())return;
         visit[i][j]=1;
         for(int k=0;k<4;k++){
             int newi=i+a[k];
