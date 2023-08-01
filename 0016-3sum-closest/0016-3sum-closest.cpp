@@ -13,19 +13,19 @@ public:
                     maxi=sum;
                     // k--;
                     // j++;
-                    if(sum<target){
-                    j++;
-                    while(j<k&&nums[j]==nums[j-1])j++;
-                }
-                else{
-                    k--;
-                    while(j<k&&nums[k]==nums[k+1])k--;
-                }
+                //     if(sum<target){
+                //     j++;
+                //     while(j<k&&nums[j]==nums[j-1])j++;
+                // }
+                // else{
+                //     k--;
+                //     while(j<k&&nums[k]==nums[k+1])k--;
+                // }
                     // while(j<k&&nums[k]==nums[k-1])k--;
                     // while(j<k&&nums[j]==nums[j-1])j++;
                     //continue;
                 }
-                 else if(sum<target){
+                 if(sum<target){
                     j++;
                     while(j<k&&nums[j]==nums[j-1])j++;
                 }
