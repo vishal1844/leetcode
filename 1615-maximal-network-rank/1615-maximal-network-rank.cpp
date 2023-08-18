@@ -1,32 +1,23 @@
 class Solution {
 public:
     int maximalNetworkRank(int n, vector<vector<int>>& roads) {
-        vector<int>adj[n];
-        for(int i=0;i<roads.size();i++){
-            adj[roads[i][0]].push_back(roads[i][1]);
-            adj[roads[i][1]].push_back(roads[i][0]);
+        set<int>adj[n];
+        int i,j,k,l,m,t=0;
+        for(i=0;i<roads.size();i++){
+            adj[roads[i][0]].insert(roads[i][1]);
+            adj[roads[i][1]].insert(roads[i][0]);
         }
-        int t=0;
-        for(int i=0;i<n;i++){
-            for(int j=i+1;j<n;j++){
-                int k=0;
-                for(auto itr:adj[i]){
-                    if(itr==j){
-                        k++;
-                        break;
-                    }
+        for(i=0;i<n;i++){
+            for(j=i+1;j<n;j++){
+                k=0;
+                if(adj[i].count(j)){
+                    k++;
                 }
-                for(auto itr:adj[j]){
-                    if(itr==i){
-                        k++;
-                        break;
-                    }
+                l=adj[i].size()+adj[j].size();
+                if(k){
+                    l--;
                 }
-                int sum=adj[i].size()+adj[j].size();
-                if(k==2){
-                    sum--;
-                }
-                t=max(t,sum);
+                t=max(t,l);
             }
         }
         return t;
