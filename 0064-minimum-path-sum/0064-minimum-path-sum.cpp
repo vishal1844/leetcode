@@ -1,23 +1,21 @@
-int dp[205][205];
 class Solution {
-    int minsum(vector<vector<int>>&grid,int i,int j){
-        if(i<0||j<0){
-            return  1e9;
-        }
-         if(i==0&&j==0){
-            return grid[i][j];
-        }
-        if(dp[i][j]!=-1){
-            return dp[i][j];
-        }
-        int mini=INT_MAX;
-        int a=grid[i][j]+minsum(grid,i-1,j);
-        int b=grid[i][j]+ minsum(grid,i,j-1);
-        return dp[i][j]=min(a,b);        
-    }
 public:
-    int minPathSum(vector<vector<int>>& grid) { 
-        memset(dp,-1,sizeof(dp));
-        return minsum(grid,grid.size()-1,grid[0].size()-1);
+    int minPathSum(int i,int j,vector<vector<int>> &grid,vector<vector<int>>& dp){
+        
+
+        if(i>grid.size()-1 || j>grid[0].size()-1) return INT_MAX;
+        
+     if(i==grid.size()-1 && j==grid[0].size()-1) return grid[i][j];
+        
+        if(dp[i][j]!=-1) return dp[i][j];
+        
+        
+        return dp[i][j]=grid[i][j]+min(minPathSum(i+1,j,grid,dp),minPathSum(i,j+1,grid,dp));
+        
+    }
+    
+    int minPathSum(vector<vector<int>>& grid) {
+        vector<vector<int>> dp(grid.size()+1,vector<int>(grid[0].size()+1,-1));
+        return minPathSum(0,0,grid,dp);
     }
 };
