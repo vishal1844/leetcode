@@ -1,26 +1,24 @@
 class Solution {
-    static bool cmp(vector<int>&a,vector<int>&b){
-        if(a[1]<b[1])return 1;
-        if(a[1]==b[1]){
-            if(a[0]>b[0])return 1;
-            return 0;
+    int solve(int i,vector<vector<int>>&pairs,vector<int>&dp){
+        if(dp[i]!=-1)return dp[i];
+        int ans=0;
+        dp[i]=1;
+        for(int k=i+1;k<pairs.size();k++){
+            if(pairs[i][1]<pairs[k][0]){
+                dp[i]=max(dp[i],1+solve(k,pairs,dp));
+            }
         }
-        return 0;
+        return dp[i];
     }
 public:
     int findLongestChain(vector<vector<int>>& pairs) {
-        sort(pairs.begin(),pairs.end(),cmp);
-        int t=1,k=1,j=0;
-        k=pairs[0][1];
-        j=pairs[0][0];
-        for(int i=0;i<pairs.size()-1;i++){
-            if(k<pairs[i+1][0]){
-                //cout<<pairs[i][1]<<" "<<pairs[i+1][0];
-                k=pairs[i+1][1];
-                t++;
-            }
+        sort(pairs.begin(),pairs.end());
+        int maxi=0;
+        vector<int>dp(pairs.size()+1,-1);
+        for(int i=0;i<pairs.size();i++){
+            maxi=max(maxi,solve(i,pairs,dp));
         }
-        return t;
+        return maxi;
         
     }
 };
