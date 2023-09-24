@@ -1,17 +1,17 @@
 class Solution {
 public:
-    double champagneTower(int poured, int query_row, int query_glass) {
-        double result[101][101] = {0.0};
-        result[0][0] = poured;
-        for (int i = 0; i < 100; i++) {
-            for (int j = 0; j <= i; j++) {
-                if (result[i][j] >= 1) {
-                    result[i + 1][j] += (result[i][j] - 1.0) / 2.0;
-                    result[i + 1][j + 1] += (result[i][j] - 1.0) / 2.0;
-                    result[i][j] = 1;
+    double champagneTower(int pour, int row, int col) {
+        double a[101][101]={0.0};
+        a[0][0]=pour;
+        for(int i=0;i<100;i++){
+            for(int j=0;j<=i;j++){
+                if(a[i][j]>1){
+                    a[i+1][j]+=(double)(a[i][j]-1.0)/2.0;
+                    a[i+1][j+1]+=(a[i][j]-1.0)/2.0;
+                    a[i][j]=1.0;
                 }
             }
         }
-        return result[query_row][query_glass];
+        return a[row][col];
     }
 };
