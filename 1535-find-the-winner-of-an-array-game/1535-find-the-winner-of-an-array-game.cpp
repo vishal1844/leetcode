@@ -10,24 +10,25 @@ public:
             }
             else{
                 if(t==k)return l;
-                break;
-            }
-        }
-        if(i==n)return l;
-        t=1;
-        l=arr[i];
-        i++;
-        for(;i<n;i++){
-            if(l>arr[i]){
-                t++;
-                if(t==k) return l;
-            }
-            else{
-                if(t==k)return l;
                 t=1;
                 l=arr[i];
             }
         }
+        // if(i==n)return l;
+        // t=1;
+        // l=arr[i];
+        // i++;
+        // for(;i<n;i++){
+        //     if(l>arr[i]){
+        //         t++;
+        //         if(t==k) return l;
+        //     }
+        //     else{
+        //         if(t==k)return l;
+        //         t=1;
+        //         l=arr[i];
+        //     }
+        // }
         return l;
     }
 };
