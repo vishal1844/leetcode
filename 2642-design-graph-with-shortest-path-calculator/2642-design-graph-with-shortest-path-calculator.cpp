@@ -1,48 +1,48 @@
 class Graph {
+    //int k;
+    //vector<vector<pair<int,int>>>adj;
 public:
-    vector<vector<pair<int, int>>> adjList;
+    vector<vector<pair<int,int>>>adj;
     Graph(int n, vector<vector<int>>& edges) {
-        adjList.resize(n);
-        for (auto& e: edges)
-            adjList[e[0]].push_back(make_pair(e[1], e[2]));
+       // k=n;
+        adj.resize(n);
+        //vector<pair<int,int>>adj[n];
+        for(auto itr:edges){
+            adj[itr[0]].push_back({itr[1],itr[2]});
+        }
     }
-
+    
     void addEdge(vector<int> edge) {
-        adjList[edge[0]].push_back(make_pair(edge[1], edge[2]));
+        adj[edge[0]].push_back({edge[1],edge[2]});
     }
-
     int shortestPath(int node1, int node2) {
-        int n = adjList.size();
-        priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> pq;
-        vector<int> costForNode(n, INT_MAX);
-        costForNode[node1] = 0;
-        pq.push({0, node1});
-
-        while (!pq.empty()) {
-            int currCost = pq.top()[0];
-            int currNode = pq.top()[1];
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
+        pq.push({0,node1});
+        int k=adj.size();
+        vector<int>v(k,INT_MAX);
+        v[node1]=0;
+        while(!pq.empty()){
+            auto itr=pq.top();
             pq.pop();
-
-            if (currCost > costForNode[currNode]) {
-                continue;
-            }
-            if (currNode == node2) {
-                return currCost;
-            }
-            for (auto& neighbor : adjList[currNode]) {
-                int neighborNode = neighbor.first;
-                int cost = neighbor.second;
-                int newCost = currCost + cost;
-
-                if (newCost < costForNode[neighborNode]) {
-                    costForNode[neighborNode] = newCost;
-                    pq.push({newCost, neighborNode});
+            int p=itr.first;
+            int l=itr.second;
+            //if(p>v[l])continue;
+            if(l==node2)return p;
+            for(auto &it:adj[l]){
+                int a=it.first;
+                int b=it.second;
+                if(p+b<v[a]){
+                    v[a]=p+b;
+                    pq.push({p+b,a});
+                    //cout<<b<<" ";
                 }
             }
+            //return -1;
         }
         return -1;
     }
 };
+
 /**
  * Your Graph object will be instantiated and called as such:
  * Graph* obj = new Graph(n, edges);
