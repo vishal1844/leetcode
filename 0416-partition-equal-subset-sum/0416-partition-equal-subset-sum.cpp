@@ -29,8 +29,29 @@ public:
             return false;
         }
         sum=sum/2;
-      vector<vector<int>>dp(200,vector<int>(20001,-1));
-        return solve(0,sum,nums,dp);
-        
+      // vector<vector<int>>dp(200,vector<int>(20001,-1));
+      //   return solve(0,sum,nums,dp);
+        int n=nums.size();
+        int k=sum+1;
+        int l=n+1;
+        int i,j;
+        vector<vector<int>>dp(l,vector<int>(k));
+        for(i=0;i<n+1;i++){
+            dp[i][0]=1;
+        }
+        for(i=0;i<sum+1;i++){
+            dp[0][i]=0;
+        }
+        for(i=1;i<n+1;i++){
+            for(j=1;j<sum+1;j++){
+                if(nums[i-1]<=j){
+                    dp[i][j]=dp[i-1][j-nums[i-1]]||dp[i-1][j];
+                }
+                else{
+                    dp[i][j]=dp[i-1][j];
+                }
+            }
+        }
+        return dp[n][sum];
     }
 };
