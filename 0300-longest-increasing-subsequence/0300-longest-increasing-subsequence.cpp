@@ -1,30 +1,15 @@
-int dp[2501][2505];
 class Solution {
-     int t = 0;
-   // int dp[25001][25001];
-
-    int solve(int i, int n,vector<int>& nums,int prevind) {
-        if (i >= n) {
-            // t = std::max(t, c);
-            return 0;
-        }
-
-        int take = 0, not_take;
-        if (dp[i][prevind+1] != -1) return dp[i][prevind+1];
-
-        if (prevind==-1 || nums[prevind] < nums[i]) {
-            take = 1 + solve(i + 1, n, nums,i);
-        }
-        not_take = solve(i + 1, n, nums,prevind);
-
-        return dp[i][prevind+1] = max(take, not_take);
-    }
-
 public:
     int lengthOfLIS(vector<int>& nums) {
-        int c = 0;
-        memset(dp, -1, sizeof(dp));
-        return solve(0, nums.size(), nums,-1);
-        // return t;
+        int n,i,j,k,l,m,t=0;
+        vector<int>v;
+        for(i=0;i<nums.size();i++){
+            auto itr=lower_bound(v.begin(),v.end(),nums[i]);
+            if(itr==v.end()){
+                v.push_back(nums[i]);
+            }else
+            *itr=nums[i];
+        }
+        return v.size();
     }
 };
