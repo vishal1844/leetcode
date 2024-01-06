@@ -15,9 +15,27 @@ class Solution {
     }
 public:
     int coinChange(vector<int>& coins, int amt) {
-        memset(dp,-1,sizeof(dp));
-        int t=solve(0,coins.size(),coins,amt);
-        if(t==INT_MAX-1)return -1;
-        return t;
+        // memset(dp,-1,sizeof(dp));
+        // int t=solve(0,coins.size(),coins,amt);
+        // if(t==INT_MAX-1)return -1;
+        //return t;
+        vector<vector<int>>dp(coins.size()+1,vector<int>(amt+1,1e9-1));
+        int i,j;
+        for(i=0;i<coins.size()+1;i++){
+            dp[i][0]=0;
+        }
+        for(i=1;i<coins.size()+1;i++){
+            for(j=1;j<amt+1;j++){
+                if(coins[i-1]<=j){
+                    dp[i][j]=min(1+dp[i][j-coins[i-1]],dp[i-1][j]);
+                }
+                else{
+                    dp[i][j]=dp[i-1][j];
+                }
+            }
+        }
+        if(dp[coins.size()][amt]==1e9-1)return -1;
+        return dp[coins.size()][amt];
+        
     }
 };
