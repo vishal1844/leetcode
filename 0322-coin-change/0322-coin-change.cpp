@@ -1,4 +1,4 @@
-int dp[14][10001];
+int dp[13][10001];
 class Solution {
     int solve(int i,int n,vector<int>&coins,int amt){
         if(amt==0)return 0;
