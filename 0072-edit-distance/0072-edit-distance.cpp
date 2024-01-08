@@ -5,10 +5,10 @@ class Solution {
         if(dp[n][m]!=-1)return dp[n][m];
         int mini=0;
         if(word1[n-1]==word2[m-1]){
-            mini=solve(word1,word2,n-1,m-1,dp);
+            return dp[n][m]=solve(word1,word2,n-1,m-1,dp);
         }
         else{
-            mini=min({solve(word1,word2,n-1,m-1,dp),solve(word1,word2,n-1,m,dp),solve(word1,word2,n,m-1,dp)})+1;
+            return dp[n][m]=min({solve(word1,word2,n-1,m-1,dp),solve(word1,word2,n-1,m,dp),solve(word1,word2,n,m-1,dp)})+1;
         }
         return dp[n][m]=mini;
     }
@@ -16,5 +16,19 @@ public:
     int minDistance(string word1, string word2) {
         vector<vector<int>>dp(word1.size()+1,vector<int>(word2.size()+1,-1));
         return solve(word1,word2,word1.size(),word2.size(),dp);
+        // int i,j;
+        // for(i=0;i<word1.size()+1;i++){
+        //     word1[i][0]=i;
+        // }
+        // for(i=0;i<word2.size()+1;i++){
+        //     word1[0][i]=i;
+        // }
+        // for(i=1;i<=word1.size();i++){
+        //     for(j=1;j<=word2.size();j++){
+        //         if(word1[i-1]==word2[j-1]){
+        //             dp[i][j]=
+        //         }
+        //     }
+        // }
     }
 };
