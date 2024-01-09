@@ -18,9 +18,21 @@ public:
         int i,j,k,l,m,t=0;
         i=0;
         string st=s;
-        j=s.size()-1;
-        vector<vector<int>>dp(s.size()+1,vector<int>(s.size()+1,-1));
-        return solve(i,j,s,dp);
+        reverse(st.begin(),st.end());
+        m=s.size();
+        vector<vector<int>>dp(s.size()+1,vector<int>(s.size()+1,0));
+        //return solve(i,j,s,dp);
+        for( i=1;i<=m;i++){
+            for(j=1;j<=m;j++){
+                if(s[i-1]==s[m-j]){
+                    dp[i][j]=1+dp[i-1][j-1];
+                }
+                else{
+                    dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+                }
+            }
+        }
+        return m-dp[m][m];
         
     }
 };
