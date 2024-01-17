@@ -1,34 +1,21 @@
 class Solution {
 public:
-    vector<vector<int>> merge(vector<vector<int>>& v) {
-        sort(v.begin(),v.end());
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
         vector<vector<int>>ans;
-        int i,j,k,l,m=-1,t=0;
-        vector<int>vec;
-        for(auto itr:v){
-            int k=itr[0];
-            int l=itr[1];
-            if(m==-1){
-                m=k;
-                t=l;
-                continue;
-            }
-            if(t>=k){
-                t=max(l,t);
+        sort(intervals.begin(),intervals.end());
+        int i,j,k,l=intervals[0][0],m=intervals[0][1];
+        for(i=1;i<intervals.size();i++){
+            if(m>=intervals[i][0]){
+                m=max(m,intervals[i][1]);
             }
             else{
-                vec.push_back(m);
-                vec.push_back(t);
-                ans.push_back(vec);
-                vec.clear();
-                m=k;
-                t=l;
+                ans.push_back({l,m});
+                l=intervals[i][0];
+                m=intervals[i][1];
+                //if(i==intervals.size()-1)return ans;
             }
         }
-        vec.push_back(m);
-        vec.push_back(t);
-        ans.push_back(vec);
+        ans.push_back({l,m});
         return ans;
-        
     }
 };
