@@ -2,12 +2,11 @@ class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
         int i,j,k;
-        unordered_set<int>st;
         for(i=0;i<nums.size();i++){
-            if(st.find(nums[i])!=st.end()){
-                return nums[i];
+            while(nums[i]!=i+1){
+                if(nums[i]==nums[nums[i]-1])return nums[i];
+                swap(nums[nums[i]-1],nums[i]);
             }
-            st.insert(nums[i]);
         }
         return 0;
     }
