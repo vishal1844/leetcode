@@ -1,22 +1,20 @@
+int dp[101][101];
 class Solution {
-public:
-    int dp[102][102] = {};
-int dfs(vector<int>& cuts, int i, int j) {
-    if (j - i <= 1)
-        return 0;
-    if (!dp[i][j]) {
-        dp[i][j] = INT_MAX;
-        for (auto k = i + 1; k < j; ++k)
-            dp[i][j] = min(dp[i][j], 
-                cuts[j] - cuts[i] + dfs(cuts, i, k) + dfs(cuts, k, j));
+    int solve(int i,int n,vector<int>&cuts,int left,int right){
+        if(left>right)return 0;
+        int cost=1e9;
+        if(dp[left][right]!=-1)return dp[left][right];
+        for(int k=left;k<=right;k++){
+            int left_cost=abs(i-cuts[k])+solve(i,cuts[k],cuts,left,k-1);
+            int right_cost=abs(n-cuts[k])+solve(cuts[k],n,cuts,k+1,right);
+            cost=min(cost,(left_cost+right_cost));
+        }
+        return dp[left][right]=cost;
     }
-    return dp[i][j];
-}
-    public:
-int minCost(int n, vector<int>& cuts) {
-    cuts.push_back(0);
-    cuts.push_back(n);
-    sort(begin(cuts), end(cuts));
-    return dfs(cuts, 0, cuts.size() - 1);
-}};
-    
+public:
+    int minCost(int n, vector<int>& cuts) {
+        sort(cuts.begin(),cuts.end());
+        memset(dp,-1,sizeof(dp));
+        return solve(0,n,cuts,0,cuts.size()-1);
+    }
+};
