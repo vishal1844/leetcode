@@ -1,21 +1,17 @@
+int dp[10001];
 class Solution {
-public:
-   int numSquares(int n) {
-    while (n % 4 == 0)
-        n /= 4;
-    if (n % 8 == 7)
-        return 4;
-    int a = -1, b = sqrt(n);
-    n -= b * b;
-    b += b + 1;
-    while (a <= b) {
-        if (n < 0)
-            n += b -= 2;
-        else if (n > 0)
-            n -= a += 2;
-        else
-            return a < 0 ? 1 : 2;
+    int solve(int sum){
+        if(sum==0)return 0;
+        if(dp[sum]!=-1)return dp[sum];
+        int t=INT_MAX;
+        for(int i=1;i*i<=sum;i++){
+            t=min(t,1+solve(sum-(i*i)));
+        }
+        return dp[sum]=t;
     }
-    return 3;
-}
+public:
+    int numSquares(int n) {
+        memset(dp,-1,sizeof(dp));
+        return solve(n);
+    }
 };
