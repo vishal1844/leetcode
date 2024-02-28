@@ -10,20 +10,27 @@
  * };
  */
 class Solution {
-    void preorder(TreeNode*root,int &sum,int level,int &ans){
-        if(root==NULL)return;
-        if(level==sum){
-            ans=root->val;
-            sum++;
-        }
-        preorder(root->left,sum,level+1,ans);
-        preorder(root->right,sum,level+1,ans);
-    }
 public:
     int findBottomLeftValue(TreeNode* root) {
-        int ans=0;
-        int sum=0;
-        preorder(root,sum,0,ans);
-        return ans;
+        int t=0;
+        queue<pair<TreeNode*,int>>q;
+        if(root==NULL)return 0;
+        int left=root->val;
+        q.push({root,0});
+        while(!q.empty()){
+            auto itr=q.front();
+            q.pop();
+            if(t<itr.second){
+                t=itr.second;
+                left=itr.first->val;
+            }
+            if(itr.first->left){
+                q.push({itr.first->left,itr.second+1});
+            }
+            if(itr.first->right){
+                q.push({itr.first->right,itr.second+1});
+            }
+        }
+        return left;
     }
 };
