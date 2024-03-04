@@ -19,7 +19,6 @@ public:
             i++;
         }
         j=i-n;
-        //cout<<j<<"  ";
         if(j==0){
             ListNode*k=head;
             head=head->next;
