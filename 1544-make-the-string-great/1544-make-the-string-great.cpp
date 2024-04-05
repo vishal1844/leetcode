@@ -2,13 +2,35 @@ class Solution {
 public:
     string makeGood(string s) {
         int i,j,k,l,t;
-        if(s.empty())
-            return s;
-        for(i=0;i<s.size()-1;i++){
-            if(s[i]==s[i+1]-32||s[i]==s[i+1]+32){
-                return makeGood(s.substr(0,i)+s.substr(i+2));
+        stack<char>st;
+        string str="";
+        if(s.size()!=0){
+            st.push(s[0]);
+        }
+        i=1;
+        while(i<s.size()){
+            if(!st.empty()&&st.top()==s[i]){
+                st.push(s[i]);
+                i++;
+            }
+            else if(!st.empty()&&tolower(st.top())==s[i]){
+                st.pop();
+                i++;
+            }
+            else if(!st.empty()&&st.top()==tolower(s[i])){
+                st.pop();
+                i++;
+            }
+            else{
+                st.push(s[i]);
+                i++;
             }
         }
-        return s;
+        while(!st.empty()){
+            str+=st.top();
+            st.pop();
+        }
+        reverse(str.begin(),str.end());
+        return str;
     }
 };
