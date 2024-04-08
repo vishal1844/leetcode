@@ -1,33 +1,15 @@
 class Solution {
 public:
     bool checkValidString(string s) {
-        int openCount = 0;
-        int closeCount = 0;
-        int length = s.length() - 1;
-        
-        // Traverse the string from both ends simultaneously
-        for (int i = 0; i <= length; i++) {
-            // Count open parentheses or asterisks
-            if (s[i] == '(' || s[i] == '*') {
-                openCount++;
-            } else {
-                openCount--;
-            }
-            
-            // Count close parentheses or asterisks
-            if (s[length - i] == ')' || s[length - i] == '*') {
-                closeCount++;
-            } else {
-                closeCount--;
-            }
-            
-            // If at any point open count or close count goes negative, the string is invalid
-            if (openCount < 0 || closeCount < 0) {
-                return false;
-            }
+        int i,j,k,l,m=0,t=0;
+        int n=s.size();
+        for(i=0;i<s.size();i++){
+            if(s[i]=='('||s[i]=='*')m++;
+            else m--;
+            if(s[n-i-1]==')'||s[n-i-1]=='*')t++;
+            else t--;
+            if(t<0||m<0)return 0;
         }
-        
-        // If open count and close count are both non-negative, the string is valid
-        return true;
+        return 1;
     }
 };
