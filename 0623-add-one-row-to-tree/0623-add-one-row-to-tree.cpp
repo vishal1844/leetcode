@@ -11,19 +11,41 @@
  */
 class Solution {
 public:
-     TreeNode* addOneRow(TreeNode* root, int v, int d, bool isLeft = true) {
-        if ( d == 1 )
-        {
-            TreeNode *left = isLeft? root : NULL, *right = isLeft? NULL : root;
-            return new TreeNode(v, left, right);
+    TreeNode* addOneRow(TreeNode* root, int val, int depth) {
+         if (depth == 1) {
+        TreeNode* newRoot = new TreeNode(val);
+        newRoot->left = root;
+        return newRoot;
+    }
+
+    queue<TreeNode*> q;
+    q.push(root);
+    int currentDepth = 1;
+
+    while (!q.empty()) {
+        int n = q.size();
+        for (int i = 0; i < n; i++) {
+            TreeNode* node = q.front();
+            q.pop();
+
+            if (currentDepth == depth - 1) {
+                TreeNode* leftChild = node->left;
+                TreeNode* rightChild = node->right;
+
+                node->left = new TreeNode(val);
+                node->left->left = leftChild;
+
+                node->right = new TreeNode(val);
+                node->right->right = rightChild;
+            } else {
+                if (node->left) q.push(node->left);
+                if (node->right) q.push(node->right);
+            }
         }
-            
-        if ( root )
-        {
-            root->left = addOneRow(root->left, v, d - 1);
-            root->right = addOneRow(root->right, v, d - 1, false);
-        }
-            
-        return root;
+        if (currentDepth == depth - 1) break;
+        currentDepth++;
+    }
+
+    return root;
     }
 };
