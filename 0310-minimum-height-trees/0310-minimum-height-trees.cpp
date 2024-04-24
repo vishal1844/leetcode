@@ -12,11 +12,11 @@ public:
             indegree[itr[1]]++;
         }
         queue<int>q;
-        vector<int>visit(n,0);
+       // vector<int>visit(n,0);
         for(i=0;i<n;i++){
             if(adj[i].size()==1){
                 q.push(i);
-                visit[i]=1;
+                //visit[i]=1;
             }
         }
         while(!q.empty()){
@@ -27,9 +27,6 @@ public:
                 q.pop();
                 indegree[itr]--;
                 for(auto it:adj[itr]){
-                    // if(!visit[it]){
-                    //     visit[it]=1;
-                    // }
                     indegree[it]--;
                     if(indegree[it]==1){
                         q.push(it);
