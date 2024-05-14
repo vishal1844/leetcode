@@ -1,45 +1,35 @@
-#include <vector>
-#include <algorithm> // for std::max
-
 class Solution {
-    int directions[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}}; // Up, Down, Left, Right
-
-    int dfs(int i, int j, std::vector<std::vector<int>>& grid, std::vector<std::vector<int>>& visited) {
-        if (i < 0 || j < 0 || i >= grid.size() || j >= grid[0].size() || grid[i][j] == 0 || visited[i][j]) {
-            return 0; // Out of bounds or visited cell or empty cell
+    int a[4]={-1,1,0,0};
+    int b[4]={0,0,-1,1};
+    int solve(int i,int j,vector<vector<int>>&grid,vector<vector<int>>&visit){
+        int t=grid[i][j];
+        visit[i][j]=1;
+        int l=0;
+        for(int k=0;k<4;k++){
+            int newi=a[k]+i;
+            int newj=b[k]+j;
+            if(newi>=0&&newj>=0&&newi<grid.size()&&newj<grid[0].size()&&!visit[newi][newj]&&grid[newi][newj]!=0){
+                t=max(t,grid[i][j]+solve(newi,newj,grid,visit));
+            }
         }
-
-        visited[i][j] = 1; // Mark current cell as visited
-        int gold = grid[i][j]; // Gold at current cell
-
-        // Explore in all four directions
-        for (const auto& dir : directions) {
-            int newi = i + dir[0];
-            int newj = j + dir[1];
-            gold = std::max(gold, grid[i][j] + dfs(newi, newj, grid, visited)); // Update maximum gold
-        }
-
-        visited[i][j] = 0; // Mark current cell as unvisited (backtrack)
-        return gold;
+        visit[i][j]=0;
+        return t;
+        
     }
-
 public:
-    int getMaximumGold(std::vector<std::vector<int>>& grid) {
-        int n = grid.size();
-        int m = grid[0].size();
-        int maxGold = 0;
-
-        std::vector<std::vector<int>> visited(n, std::vector<int>(m, 0)); // Visited matrix
-
-        // Start DFS from each cell with gold
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (grid[i][j] != 0) { // Cell contains gold
-                    maxGold = std::max(maxGold, dfs(i, j, grid, visited));
+    int getMaximumGold(vector<vector<int>>& grid) {
+        int n=grid.size();
+        int m=grid[0].size();
+        int i,j,k,l,t=0;
+        for(i=0;i<n;i++){
+            for(j=0;j<m;j++){
+                if(grid[i][j]!=0){
+                   // visit[i][j]=1;
+                    vector<vector<int>>visit(n,vector<int>(m,0));
+                    t=max(t,solve(i,j,grid,visit));
                 }
             }
         }
-
-        return maxGold;
+        return t;
     }
 };
