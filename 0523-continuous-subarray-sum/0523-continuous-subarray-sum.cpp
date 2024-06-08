@@ -7,7 +7,7 @@ public:
             t+=nums[i];
             t=t%k;
             // if(t==0){
-            //     if(i!=0){
+            //     if(i!=0){                 ///////this base condition is also correct
             //         return true;
             //     }
             // }
