@@ -1,84 +1,68 @@
 class UnionFind {
-    vector<int> representative;
-    vector<int> componentSize;
-    // Number of distinct components in the graph.
+    vector<int> root, Size;
     int components;
-    
 public:
-    // Initialize the list representative and componentSize
-    // Each node is representative of itself with size 1.
-    UnionFind(int n) {
-        components = n;
-        for (int i = 0; i <= n; i++) {
-            representative.push_back(i);
-            componentSize.push_back(1);
-        }
+    //Constructor using initializer list
+    UnionFind(int n): root(n+1), Size(n+1,1), components(n){
+        iota(root.begin(), root.end(), 0);//[0,1,...,n]    
     }
     
-    // Get the root of a node.
-    int findRepresentative(int x) {
-        if (representative[x] == x) {
+    int Find(int x) {//Path Compression O(alpha(n))
+        if (x==root[x]) 
             return x;
-        }
-        
-        // Path compression.
-        return representative[x] = findRepresentative(representative[x]);
+        return root[x] = Find(root[x]);
     }
-    
-    // Perform the union of two components that belongs to node x and node y.
-    int performUnion(int x, int y) {       
-        x = findRepresentative(x); y = findRepresentative(y);
+
+    bool Union(int x, int y) { //Union by Size O(alpha(n))   
+        x=Find(x), y=Find(y);
         
-        if (x == y) {
-            return 0;
-        }
+        if (x == y) return 0;
         
-        if (componentSize[x] > componentSize[y]) {
-            componentSize[x] += componentSize[y];
-            representative[y] = x;
-        } else {
-            componentSize[y] += componentSize[x];
-            representative[x] = y;
-        }
-        
+        if (Size[x] > Size[y]) {
+            Size[x] +=Size[y];
+            root[y] = x;
+        } 
+        else {
+            Size[y] += Size[x];
+            root[x] = y;
+        }       
         components--;
         return 1;
     }
-    
-    // Returns true if all nodes get merged to one.
+
     bool isConnected() {
         return components == 1;
     }
+        
 };
 
 class Solution {
 public:
     int maxNumEdgesToRemove(int n, vector<vector<int>>& edges) {
-        // Different objects for Alice and Bob.
         UnionFind Alice(n), Bob(n);
 
-        int edgesRequired = 0;
-        // Perform union for edges of type = 3, for both Alice and Bob.
-        for (vector<int>& edge : edges) {
-            if (edge[0] == 3) {
-                edgesRequired += (Alice.performUnion(edge[1], edge[2]) | Bob.performUnion(edge[1], edge[2]));
+        int edgesNeed=0;
+        // Process type 3 edges first
+        for (vector<int>& e: edges) {
+            if (e[0]==3) {
+                edgesNeed+=(Alice.Union(e[1], e[2]) | Bob.Union(e[1], e[2]));
             }
         }
-
-        // Perform union for Alice if type = 1 and for Bob if type = 2.
-        for (vector<int>& edge : edges) {
-            if (edge[0] == 1) {
-                edgesRequired += Alice.performUnion(edge[1], edge[2]);
-            } else if (edge[0] == 2) {
-                edgesRequired += Bob.performUnion(edge[1], edge[2]);
-            }
+        // Process type 1 and type 2 edges
+        for (vector<int>& e: edges){
+            if (e[0]==1) edgesNeed+=Alice.Union(e[1], e[2]);
+            else if (e[0]==2) edgesNeed+=Bob.Union(e[1], e[2]);
         }
 
-        // Check if the Graphs for Alice and Bob have n - 1 edges or is a single component.
-        if (Alice.isConnected() && Bob.isConnected()) {
-            return edges.size() - edgesRequired;
-        }
-        
+        if (Alice.isConnected() && Bob.isConnected())
+            return edges.size()-edgesNeed;
         return -1;
     }
 };
+
+auto init = []() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    return 'c';
+}();
