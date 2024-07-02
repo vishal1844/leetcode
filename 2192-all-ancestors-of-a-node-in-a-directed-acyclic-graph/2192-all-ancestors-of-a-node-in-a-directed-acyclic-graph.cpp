@@ -1,41 +1,39 @@
-#include <vector>
-#include <set>
-#include <algorithm>
-
-using namespace std;
-
 class Solution {
+    vector<set<int>> v;
+    vector<int> visit;
+    
+    void dfs(int i, vector<int> adj[]) {
+        visit[i] = 1;
+        for (auto itr : adj[i]) {
+            if (!visit[itr]) {
+                dfs(itr, adj);
+            }
+            v[i].insert(itr);
+            v[i].insert(v[itr].begin(), v[itr].end());
+        }
+    }
+    
 public:
     vector<vector<int>> getAncestors(int n, vector<vector<int>>& edges) {
+        v.resize(n);
+        visit.resize(n, 0);
         vector<vector<int>> ans(n);
-        vector<set<int>> ancestors(n);
-        vector<vector<int>> adj(n);
-
-        // Build the adjacency list
-        for (auto& edge : edges) {
-            adj[edge[1]].push_back(edge[0]);
+        vector<int> adj[n];
+        
+        for (auto itr : edges) {
+            adj[itr[1]].push_back(itr[0]);
         }
-
-        // Perform a BFS/DFS to gather ancestors
-        for (int i = 0; i < n; ++i) {
-            gatherAncestors(i, adj, ancestors);
-        }
-
-        // Convert sets of ancestors to sorted vectors
-        for (int i = 0; i < n; ++i) {
-            ans[i] = vector<int>(ancestors[i].begin(), ancestors[i].end());
-        }
-
-        return ans;
-    }
-
-private:
-    void gatherAncestors(int node, vector<vector<int>>& adj, vector<set<int>>& ancestors) {
-        for (int parent : adj[node]) {
-            if (ancestors[node].insert(parent).second) { // If parent was newly inserted
-                gatherAncestors(parent, adj, ancestors); // Recursively gather ancestors
-                ancestors[node].insert(ancestors[parent].begin(), ancestors[parent].end()); // Add all ancestors of parent
+        
+        for (int i = 0; i < n; i++) {
+            if (!visit[i]) {
+                dfs(i, adj);
             }
         }
+        
+        for (int i = 0; i < n; i++) {
+            ans[i] = vector<int>(v[i].begin(), v[i].end());
+        }
+        
+        return ans;
     }
 };
