@@ -1,41 +1,32 @@
-#include<bits/stdc++.h>
 class Solution {
 public:
-   int maximumGain(std::string s, int x, int y) {
-        int totalGain = 0;
-        if (x < y) {
-            std::swap(x, y);
-            string str=s;
-            reverse(str.begin(),str.end());
-            swap(s, str);
+    int maximumGain(string s, int x, int y) {
+        int i,j,k,l,m,t=0;
+        if(x>y){
+            swap(x,y);
+            reverse(s.begin(),s.end());
         }
-
-        std::stack<char> st;
-        for (char ch : s) {
-            if (!st.empty() && st.top() == 'a' && ch == 'b') {
-                st.pop();
-                totalGain += x;
-            } else {
-                st.push(ch);
+        int a=0;
+        int b=0;
+        for(i=0;i<s.size();i++){
+            if(s[i]=='b')b++;
+            else if(s[i]=='a'){
+                if(b){
+                    b--;
+                    t+=y;
+                }
+                else{
+                    a++;
+                }
+            }
+            else{
+                t+=(x*min(a,b));
+                a=0;
+                b=0;
             }
         }
-
-        std::string remainingString;
-        while (!st.empty()) {
-            remainingString += st.top();
-            st.pop();
-        }
-        std::reverse(remainingString.begin(), remainingString.end());
-
-        for (char ch : remainingString) {
-            if (!st.empty() && st.top() == 'b' && ch == 'a') {
-                st.pop();
-                totalGain += y;
-            } else {
-                st.push(ch);
-            }
-        }
-
-        return totalGain;
+        t+=(x*min(a,b));
+        return t;
     }
+    
 };
