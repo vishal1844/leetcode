@@ -10,47 +10,40 @@
  * };
  */
 class Solution {
-public:
-    TreeNode* createBinaryTree(vector<vector<int>>& descriptions) {
-        unordered_map<int, vector<pair<int, bool>>> parentToChildren;
-        unordered_set<int> allNodes;
-        unordered_set<int> children;
-        for (auto& desc : descriptions) {
-            int parent = desc[0];
-            int child = desc[1];
-            bool isLeft = desc[2];
-
-            parentToChildren[parent].push_back({child, isLeft});
-            allNodes.insert(parent);
-            allNodes.insert(child);
-            children.insert(child);
+    TreeNode* dfs(unordered_map<int,vector<pair<int,bool>>>&parent,int rootVal){
+        TreeNode*root=new TreeNode(rootVal);
+        for(auto itr:parent[rootVal]){
+            if(itr.second==1){
+                root->left=dfs(parent,itr.first);
+            }
+            else{
+                root->right=dfs(parent,itr.first);
+            }
         }
-        int rootVal = 0;
-        for (int node : allNodes) {
-            if (!children.contains(node)) {
-                rootVal = node;
+        return root;
+        
+    }
+public:
+    TreeNode* createBinaryTree(vector<vector<int>>& d) {
+        unordered_map<int,vector<pair<int,bool>>>parentToChild;
+        unordered_set<int>child;
+        unordered_set<int>allNodes;
+        for(auto itr:d){
+            int parent=itr[0];
+            int childNodes=itr[1];
+            bool left=itr[2];
+            parentToChild[parent].push_back({childNodes,left});
+            allNodes.insert(parent);
+            allNodes.insert(childNodes);
+            child.insert(childNodes);
+        }
+        int rootVal=0;
+        for(auto itr:allNodes){
+            if(!child.count(itr)){
+                rootVal=itr;
                 break;
             }
         }
-        return dfs(parentToChildren, rootVal);
-    }
-
-private:
-    TreeNode* dfs(unordered_map<int, vector<pair<int, bool>>>& parentToChildren,
-                  int val) {
-        TreeNode* node = new TreeNode(val);
-        if (parentToChildren.find(val) != parentToChildren.end()) {
-            for (auto& child_info : parentToChildren[val]) {
-                int child = child_info.first;
-                bool isLeft = child_info.second;
-                if (isLeft) {
-                    node->left = dfs(parentToChildren, child);
-                } else {
-                    node->right = dfs(parentToChildren, child);
-                }
-            }
-        }
-
-        return node;
+        return dfs(parentToChild,rootVal);
     }
 };
