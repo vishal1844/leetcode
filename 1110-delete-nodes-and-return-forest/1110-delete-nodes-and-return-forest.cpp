@@ -10,31 +10,29 @@
  * };
  */
 class Solution {
-    vector<TreeNode*> ans;
-    
-    TreeNode* solve(set<int>& st, TreeNode* root) {
-        if (!root) return nullptr;
-
-        root->left = solve(st, root->left);
-        root->right = solve(st, root->right);
-        
-        if (st.count(root->val)) {
-            if (root->left) {
+    vector<TreeNode*>ans;
+    TreeNode* solve(set<int>&st,TreeNode*root){
+        if(root==NULL)return nullptr;
+        root->left=solve(st,root->left);
+        root->right=solve(st,root->right);
+        if(st.count(root->val)){
+            if(root->left){
                 ans.push_back(root->left);
             }
-            if (root->right) {
+            if(root->right){
                 ans.push_back(root->right);
             }
             return nullptr;
         }
-        
         return root;
     }
-    
 public:
     vector<TreeNode*> delNodes(TreeNode* root, vector<int>& to_delete) {
-        set<int> st(to_delete.begin(), to_delete.end());
-        if (solve(st, root)) {
+        set<int>st;
+        for(auto itr:to_delete){
+            st.insert(itr);
+        }
+        if(solve(st,root)){
             ans.push_back(root);
         }
         return ans;
