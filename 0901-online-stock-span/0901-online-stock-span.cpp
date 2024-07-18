@@ -1,17 +1,16 @@
 class StockSpanner {
+    stack<pair<int,int>>Garima;
 public:
-    StockSpanner() {
-        
+    StockSpanner() {    
     }
-    stack<pair<int,int>>stack;
     
     int next(int price) {
         int ans=1;
-        while(!stack.empty()&&stack.top().first<=price){
-            ans+=stack.top().second;
-            stack.pop();
+        while(!Garima.empty()&&Garima.top().first<=price){
+            ans+=Garima.top().second;
+            Garima.pop();
         }
-        stack.push({price,ans});
+        Garima.push({price,ans});
         return ans;
     }
 };
