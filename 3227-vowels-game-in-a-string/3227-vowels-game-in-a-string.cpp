@@ -6,10 +6,6 @@ public:
             if(itr=='a'||itr=='e'||itr=='i'||itr=='o'||itr=='u') t++;
         }
         if(t==0)return 0;
-        if(t%2==1){
-            return 1;
-        }
-        if(t%3==0)return 1;
         return 1;
     }
 };
