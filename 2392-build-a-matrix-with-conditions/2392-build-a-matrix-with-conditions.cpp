@@ -1,51 +1,49 @@
 class Solution {
-public:
-    vector<vector<int>> buildMatrix(int k, vector<vector<int>>& rowConditions,
-                                    vector<vector<int>>& colConditions) {
-        // Store the topologically sorted sequences.
-        vector<int> orderRows = topoSort(rowConditions, k);
-        vector<int> orderColumns = topoSort(colConditions, k);
-
-        // If no topological sort exists, return empty array.
-        if (orderRows.empty() or orderColumns.empty()) return {};
-
-        vector<vector<int>> matrix(k, vector<int>(k, 0));
-        for (int i = 0; i < k; i++) {
-            for (int j = 0; j < k; j++) {
-                if (orderRows[i] == orderColumns[j]) {
-                    matrix[i][j] = orderRows[i];
+    vector<int>kahn(int k,vector<vector<int>>&v){
+        vector<int>adj[k+1];
+        int i,j,l,m,t=0;
+        vector<int>indegree(k+1);
+        for(auto itr:v){
+            adj[itr[0]].push_back(itr[1]);
+            indegree[itr[1]]++;
+        }
+        queue<int>q;
+        vector<int>ans;
+        for(i=1;i<k+1;i++){
+            if(indegree[i]==0){
+                q.push(i);
+            }
+        }
+        while(!q.empty()){
+            auto itr=q.front();
+            q.pop();
+            ans.push_back(itr);
+            for(auto it:adj[itr]){
+                indegree[it]--;
+                if(indegree[it]==0){
+                    q.push(it);
                 }
             }
         }
-        return matrix;
+        return ans;
     }
-
-private:
-    // Code to find the topologically sorted sequence using Kahn's algorithm.
-    vector<int> topoSort(vector<vector<int>>& edges, int n) {
-        // Create an adjacency list to store the edges.
-        vector<vector<int>> adj(n + 1);
-        vector<int> deg(n + 1), order;
-        for (auto x : edges) {
-            adj[x[0]].push_back(x[1]);
-            deg[x[1]]++;
-        }
-        queue<int> q;
-        // Push all integers with in-degree 0 in the queue.
-        for (int i = 1; i <= n; i++) {
-            if (deg[i] == 0) q.push(i);
-        }
-        while (!q.empty()) {
-            int f = q.front();
-            q.pop();
-            order.push_back(f);
-            n--;
-            for (auto v : adj[f]) {
-                if (--deg[v] == 0) q.push(v);
+public:
+    vector<vector<int>> buildMatrix(int k, vector<vector<int>>& rc, vector<vector<int>>& cc) {
+        int i,j,l,m,t=0;
+        vector<vector<int>>ans(k,vector<int>(k,0));
+        vector<int>rowt=kahn(k,rc);
+        if(rowt.size()!=k)return {};
+        vector<int>colt=kahn(k,cc);
+        if(colt.size()!=k)return {};
+        for(i=0;i<rowt.size();i++){
+            for(j=0;j<colt.size();j++){
+                if(rowt[i]==colt[j]){
+                    ans[i][j]=rowt[i];
+                }
             }
         }
-        // If we have not visited all integers, return empty array.
-        if (n != 0) return {};
-        return order;
+                        return ans;
+        
+    
     }
 };
