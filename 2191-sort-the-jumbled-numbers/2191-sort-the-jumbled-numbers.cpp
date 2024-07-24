@@ -1,22 +1,23 @@
 class Solution {
 public:
     vector<int> sortJumbled(vector<int>& mapping, vector<int>& nums) {
-        vector<pair<int, int>> storePairs;
-
-        for (int i = 0; i < nums.size(); ++i) {
-            string number = to_string(nums[i]);
-            string formed = "";
-            for (int j = 0; j < number.size(); ++j) {
-                formed = formed + (to_string(mapping[number[j] - '0']));
+        int i,j,k,l,m,t=0;
+        vector<pair<int,int>>mp;
+        for(i=0;i<nums.size();i++){
+            string s=to_string(nums[i]);
+            string str;
+            for(j=0;j<s.size();j++){
+                str+=to_string(mapping[s[j]-'0']);
             }
-            int mappedValue = stoi(formed);
-            storePairs.push_back({mappedValue, i});
+            k=stoi(str);
+            mp.push_back({k,i});
         }
-        sort(storePairs.begin(), storePairs.end());
-        vector<int> answer;
-        for (auto pair : storePairs) {
-            answer.push_back(nums[pair.second]);
+        sort(mp.begin(),mp.end());
+        vector<int>ans;
+        for(auto itr:mp){
+            ans.push_back(nums[itr.second]);
         }
-        return answer;
+        return ans;
+        
     }
 };
