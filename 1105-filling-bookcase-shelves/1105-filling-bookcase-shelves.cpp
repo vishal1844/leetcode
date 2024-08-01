@@ -1,37 +1,17 @@
 class Solution {
-public:
-    int minHeightShelves(vector<vector<int>>& books, int shelfWidth) {
-        vector<vector<int>> memo(books.size(), vector<int>(shelfWidth + 1, 0));
-        return dpHelper(books, shelfWidth, memo, 0, shelfWidth, 0);
+    int dp[1001][1001];
+    int solve(int i,vector<vector<int>>&books,int s,int remainings,int maxh){
+        if(i>=books.size())return maxh;
+        if(dp[i][remainings]!=-1)return dp[i][remainings];
+        int t=INT_MAX;
+        if(remainings>=books[i][0]){
+            t=min(t,solve(i+1,books,s,remainings-books[i][0],max(maxh,books[i][1])));
+        }
+        return dp[i][remainings]=min(t,maxh+solve(i+1,books,s,s-books[i][0],books[i][1]));
     }
-
-private:
-    int dpHelper(vector<vector<int>>& books, int shelfWidth,
-                 vector<vector<int>>& memo, int i, int remainingShelfWidth,
-                 int maxHeight) {
-        vector<int> currentBook = books[i];
-        int maxHeightUpdated = max(maxHeight, currentBook[1]);
-        if (i == books.size() - 1) {
-            if (remainingShelfWidth >= currentBook[0]) return maxHeightUpdated;
-            return maxHeight + currentBook[1];
-        }
-        if (memo[i][remainingShelfWidth] != 0) {
-            return memo[i][remainingShelfWidth];
-        } else {
-            int option1Height =
-                maxHeight + dpHelper(books, shelfWidth, memo, i + 1,
-                                     shelfWidth - currentBook[0],
-                                     currentBook[1]);
-            if (remainingShelfWidth >= currentBook[0]) {
-                int option2Height = dpHelper(
-                    books, shelfWidth, memo, i + 1,
-                    remainingShelfWidth - currentBook[0], maxHeightUpdated);
-                memo[i][remainingShelfWidth] =
-                    min(option1Height, option2Height);
-                return memo[i][remainingShelfWidth];
-            }
-            memo[i][remainingShelfWidth] = option1Height;
-            return memo[i][remainingShelfWidth];
-        }
+public:
+    int minHeightShelves(vector<vector<int>>& books, int s) {
+        memset(dp,-1,sizeof(dp));
+        return solve(0,books,s,s,0);
     }
 };
