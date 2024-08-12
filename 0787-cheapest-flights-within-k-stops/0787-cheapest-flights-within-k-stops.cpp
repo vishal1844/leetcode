@@ -1,30 +1,34 @@
 class Solution {
 public:
-    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
-        vector<vector<pair<int, int>>> adj(n);
-        for (auto& e : flights) {
-            adj[e[0]].push_back({e[1], e[2]});
+    int findCheapestPrice(int n, vector<vector<int>>& f, int src, int dst, int k) {
+        queue<pair<int,pair<int,int>>>q;
+        int i,j,l,m,t=0;
+        vector<pair<int,int>>adj[n];
+        for(auto itr:f){
+            int s=itr[0];
+            int d=itr[1];
+            l=itr[2];
+            adj[s].push_back({d,l});
         }
-        vector<int> dist(n, numeric_limits<int>::max());
-        queue<pair<int, int>> q;
-        q.push({src, 0});
-        int stops = 0;
-
-        while (stops <= k && !q.empty()) {
-            int sz = q.size();
-            // Iterate on current level.
-            while (sz--) {
-                auto [node, distance] = q.front();
-                q.pop();
-                // Iterate over neighbors of popped node.
-                for (auto& [neighbour, price] : adj[node]) {
-                    if (price + distance >= dist[neighbour]) continue;
-                    dist[neighbour] = price + distance;
-                    q.push({neighbour, dist[neighbour]});
+        vector<int>dist(n,INT_MAX);
+        q.push({0,{0,src}});
+        while(!q.empty()){
+            auto itr=q.front();
+            q.pop();
+             int stops=itr.first;
+            int score=itr.second.first;
+            int node=itr.second.second;
+            if(stops<=k){
+            for(auto itr:adj[node]){
+                if(score+itr.second<dist[itr.first]){
+                    dist[itr.first]=score+itr.second;
+                    q.push({stops+1,{score+itr.second,itr.first}});
+                                    
                 }
             }
-            stops++;
+            }
         }
-        return dist[dst] == numeric_limits<int>::max() ? -1 : dist[dst];
+        if(dist[dst]==INT_MAX)return -1;
+        return dist[dst];
     }
 };
