@@ -4,7 +4,7 @@ public:
     vector<int> getFinalState(vector<int>& nums, int k, int mul) {
         priority_queue<pair<long long, int>, vector<pair<long long, int>>, greater<pair<long long, int>>> pq;
         int mod = 1e9 + 7;
-        unordered_map<int,int>mp;
+        // unordered_map<int,int>mp;
         int maxi=*max_element(nums.begin(),nums.end());
         for (int i = 0; i < nums.size(); i++) {
             pq.push({nums[i], i});
@@ -13,12 +13,12 @@ public:
         while (1) {
             auto itr = pq.top();
             long long p=(itr.first*mul);
-            if(p>maxi||mp.size()==nums.size())
+            if(p>maxi)
                 break;
             pq.pop();
             pq.push({(itr.first * mul)%mod, itr.second});
             k--;
-            mp[itr.second]++;
+            //mp[itr.second]++;
             if(k<=0)break;
         }
         int n=nums.size();
