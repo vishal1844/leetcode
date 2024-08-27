@@ -1,37 +1,31 @@
-#include <vector>
-#include <queue>
-#include <utility>
-using namespace std;
-
 class Solution {
 public:
     double maxProbability(int n, vector<vector<int>>& edges, vector<double>& s, int start, int end) {
-        // Construct the adjacency list
-        vector<pair<int, double>> adj[n];
-        for (int i = 0; i < edges.size(); i++) {
-            adj[edges[i][0]].push_back({edges[i][1], s[i]});
-            adj[edges[i][1]].push_back({edges[i][0], s[i]});
+        vector<pair<int,double>>adj[n];
+        for(int i=0;i<edges.size();i++){
+            adj[edges[i][0]].push_back({edges[i][1],s[i]});
+            adj[edges[i][1]].push_back({edges[i][0],s[i]});
         }
-
-        // Queue for BFS
-        queue<pair<int, double>> q;
-        vector<double> probabilities(n, 0.0);
-        probabilities[start] = 1.0;
-        q.push({start, 1.0});
-
-        while (!q.empty()) {
-            auto [node, currProb] = q.front();
+        int i,j,k,l,m,t=0;
+        double ans=0.0;
+        vector<double>dis(n,0.0);
+        dis[start]=1.0;
+        queue<pair<int,double>>q;
+        q.push({start,1.0});
+        while(!q.empty()){
+            auto itr=q.front();
             q.pop();
-
-            for (auto& [neighbor, edgeProb] : adj[node]) {
-                double newProb = currProb * edgeProb;
-                if (newProb > probabilities[neighbor]) {
-                    probabilities[neighbor] = newProb;
-                    q.push({neighbor, newProb});
+            int node=itr.first;
+            double dist=itr.second;
+            for(auto itr:adj[node]){
+                if(dist*itr.second>dis[itr.first]){
+                    dis[itr.first]=dist*itr.second;
+                    q.push({itr.first,itr.second*dist});
                 }
             }
         }
-
-        return probabilities[end];
+        return dis[end];
+        
+        
     }
 };
