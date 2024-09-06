@@ -12,8 +12,8 @@ class Solution {
 public:
     ListNode* modifiedList(vector<int>& nums, ListNode* head) {
         set<int>st(nums.begin(),nums.end());
-        ListNode*ans=new ListNode();
-        ListNode*temp=ans;
+        ListNode*temp=new ListNode();
+        ListNode*ans=temp;
         while(head!=NULL){
             if(!st.count(head->val)){
                 temp->next=new ListNode(head->val);
