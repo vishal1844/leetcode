@@ -1,30 +1,40 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
 class Solution {
 public:
-    vector<ListNode*> splitListToParts(ListNode* root, int k) {
-        vector<ListNode*> parts(k, nullptr);
-        int len = 0;
-        for (ListNode* node = root; node; node = node->next)
-            len++;
-        int n = len / k, r = len % k; // n : minimum guaranteed part size; r : extra nodes spread to the first r parts;
-        ListNode* node = root, *prev = nullptr;
-        for (int i = 0; node && i < k; i++, r--) {
-            parts[i] = node;
-            for (int j = 0; j < n + (r > 0); j++) {
-                prev = node;
-                node = node->next;
-            }
-            prev->next = nullptr;
+    vector<ListNode*> splitListToParts(ListNode* head, int k) {
+        // First, determine the length of the linked list
+        ListNode* temp = head;
+        int length = 0;
+        while (temp) {
+            length++;
+            temp = temp->next;
         }
-        return parts;
+
+        // Calculate the size of each part and the number of parts that will be larger by one node
+        int partSize = length / k;
+        int extraParts = length % k;
+
+        vector<ListNode*> result;
+
+        // Split the list into parts
+        for (int i = 0; i < k; ++i) {
+            ListNode* partHead = head;
+            ListNode* prev = nullptr;
+
+            // Determine the size of the current part
+            int currentSize = partSize + (i < extraParts ? 1 : 0);
+            for (int j = 0; j < currentSize; ++j) {
+                prev = head;
+                head = head->next;
+            }
+
+            // Detach the current part from the rest of the list
+            if (prev) {
+                prev->next = nullptr;
+            }
+
+            result.push_back(partHead);
+        }
+
+        return result;
     }
 };
